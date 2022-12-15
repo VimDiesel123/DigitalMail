@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default class Greeting extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { greeting: '' };
-  }
+export default function Greeting() {
+  const [message, setMessage] = useState('');
 
-  async componentDidMount() {
-    const response = await fetch(`/api/greeting`, {
-      method: 'GET',
-    });
-    const greeting = await response.text();
-    this.setState({ greeting });
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`/api/greeting`, {
+        method: 'GET',
+      });
+      const greeting = await response.text();
+      setMessage(greeting);
+    }
+    fetchData();
+  });
 
-  render() {
-    const { greeting } = this.state;
-    return <h1>{greeting}</h1>;
-  }
+  return <h1>{message}</h1>;
 }
