@@ -21,6 +21,12 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      name: 'vendor',
+      chunks: 'all',
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'index.html'),
