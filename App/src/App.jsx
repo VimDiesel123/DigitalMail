@@ -27,6 +27,8 @@ root.render(
     domain="dev-6xzvx6amw4huzdgq.us.auth0.com"
     clientId="rcemq97nBaT1z5qWiuzy2JzeuE2qXoNI"
     redirectUri="http://localhost:3000"
+    audience="https://dev-6xzvx6amw4huzdgq.us.auth0.com/api/v2/"
+    scope="read:current_user update:current_user_metadata"
   >
     {page}
   </Auth0Provider>
