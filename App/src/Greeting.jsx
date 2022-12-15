@@ -11,7 +11,6 @@ export default class Greeting extends React.Component {
       method: 'GET',
     });
     const greeting = await response.text();
-    console.log(greeting);
     this.setState({ greeting });
   }
 
