@@ -1,6 +1,8 @@
 const express = require('express');
 require('dotenv').config();
 const { Storage } = require('@google-cloud/storage');
+const { expressjwt: jwt } = require('express-jwt');
+const jwks = require('jwks-rsa');
 
 const app = express();
 
@@ -12,7 +14,21 @@ app.get('/api/greeting', (req, res) => {
   res.send(greetingMessage);
 });
 
-app.get('/api/pdf', async (req, res) => {
+const jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://dev-6xzvx6amw4huzdgq.us.auth0.com/.well-known/jwks.json',
+  }),
+  audience: 'https://digitalmail.com/api',
+  issuer: 'https://dev-6xzvx6amw4huzdgq.us.auth0.com/',
+  algorithms: ['RS256'],
+});
+
+app.get('/api/pdf', jwtCheck, async (req, res) => {
+  console.log('%cHERE!!!!!!!', 'color:red');
+  console.log('Request object', req);
   const keyFileName = process.env.GOOGLE_CLOUD_STORAGE_KEY_FILE;
   const storage = new Storage({ keyFileName });
 

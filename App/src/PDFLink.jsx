@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
-export default class PDFLink extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { link: '' };
-  }
+export default function PDFLink() {
+  const [link, setLink] = useState('');
 
-  async componentDidMount() {
-    const response = await fetch('/api/pdf', {
-      method: 'GET',
-    });
-    const { pdfUrl } = await response.json();
-    this.setState({ link: pdfUrl });
-  }
+  const { getAccessTokenSilently } = useAuth0();
 
-  render() {
-    const { link } = this.state;
-    return (
-      <a href={link} target="_blank" rel="noreferrer">
-        I am a pdf on the cloud
-      </a>
-    );
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const accessToken = await getAccessTokenSilently();
+
+      console.log('Access token: ', accessToken);
+
+      const response = await fetch(`/api/pdf`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      console.log(response);
+      const { pdfUrl } = await response.json();
+      setLink(pdfUrl);
+    }
+    fetchData();
+  }, [getAccessTokenSilently]);
+  return (
+    <a href={link} target="_blank" rel="noreferrer">
+      I am a pdf on the cloud
+    </a>
+  );
 }
