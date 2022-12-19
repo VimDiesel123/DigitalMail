@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-export default function PDFLink() {
-  const [link, setLink] = useState('');
+export default function PDFLinks() {
+  const [links, setLinks] = useState([]);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -12,7 +12,7 @@ export default function PDFLink() {
 
       console.log('Access token: ', accessToken);
 
-      const response = await fetch(`/api/pdf`, {
+      const response = await fetch(`/api/user/pdfs`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -21,14 +21,22 @@ export default function PDFLink() {
       });
 
       console.log(response);
-      const { pdfUrl } = await response.json();
-      setLink(pdfUrl);
+      const { pdfs } = await response.json();
+      console.log(pdfs);
+      setLinks(pdfs);
     }
     fetchData();
   }, [getAccessTokenSilently]);
   return (
-    <a href={link} target="_blank" rel="noreferrer">
-      I am a pdf on the cloud
-    </a>
+    <div>
+      {links.map((link) => (
+        <div>
+          <a href={link} target="_blank" key={link} rel="noreferrer">
+            This is a link to a pdf on google cloud!
+          </a>
+          <hr />
+        </div>
+      ))}
+    </div>
   );
 }

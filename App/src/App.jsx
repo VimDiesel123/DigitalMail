@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Auth0Provider } from '@auth0/auth0-react';
 import Greeting from './Greeting.jsx';
-import PDFLink from './PDFLink.jsx';
+import PDFLink from './PDFLinks.jsx';
 import LoginButton from './LoginButton.jsx';
 import LogoutButton from './LogoutButton.jsx';
 import Profile from './Profile.jsx';

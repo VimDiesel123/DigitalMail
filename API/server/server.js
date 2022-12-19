@@ -26,22 +26,33 @@ const jwtCheck = jwt({
   algorithms: ['RS256'],
 });
 
-app.get('/api/pdf', jwtCheck, async (req, res) => {
-  console.log('%cHERE!!!!!!!', 'color:red');
-  console.log('Request object', req);
+const mockUserDB = [
+  {
+    name: 'David',
+    id: 'auth0|639b6ea8868c06d59722f51d',
+  },
+];
+
+app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   const keyFileName = process.env.GOOGLE_CLOUD_STORAGE_KEY_FILE;
   const storage = new Storage({ keyFileName });
 
-  const bucket = storage.bucket('digital_main_test_bucket');
-  const pdfFile = bucket.file('test/ADA Dental Claim Example001.pdf');
+  const [files] = await storage.bucket('digital_main_test_bucket').getFiles();
 
-  const signedURL = await pdfFile.getSignedUrl({
-    action: 'read',
-    expires: '12/20/2022',
-  });
+  const pdfs = files.filter((file) => file.name.endsWith('.pdf'));
+
+  const signedUrls = await Promise.all(
+    pdfs.map((file) => {
+      const options = {
+        action: 'read',
+        expires: Date.now() + 1000 * 60 * 60, // 1 hour
+      };
+      return file.getSignedUrl(options);
+    }),
+  );
 
   res.json({
-    pdfUrl: signedURL,
+    pdfs: signedUrls,
   });
 });
 
