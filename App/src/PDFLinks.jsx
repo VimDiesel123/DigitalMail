@@ -10,8 +10,6 @@ export default function PDFLinks() {
     async function fetchData() {
       const accessToken = await getAccessTokenSilently();
 
-      console.log('Access token: ', accessToken);
-
       const response = await fetch(`/api/user/pdfs`, {
         method: 'GET',
         headers: {
@@ -19,10 +17,7 @@ export default function PDFLinks() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      console.log(response);
       const { pdfs } = await response.json();
-      console.log(pdfs);
       setLinks(pdfs);
     }
     fetchData();
