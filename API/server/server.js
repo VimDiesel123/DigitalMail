@@ -3,6 +3,8 @@ require('dotenv').config();
 const { Storage } = require('@google-cloud/storage');
 const { expressjwt: jwt } = require('express-jwt');
 const jwks = require('jwks-rsa');
+const { connectToDb } = require('./db');
+const { byID } = require('./user');
 
 const app = express();
 
@@ -26,19 +28,6 @@ const jwtCheck = jwt({
   algorithms: ['RS256'],
 });
 
-const mockUserDB = [
-  {
-    name: 'David',
-    id: 'auth0|639b6ea8868c06d59722f51d',
-    dir: 'test/',
-  },
-  {
-    name: 'Darklord47',
-    id: 'auth0|63ab14fa5ade362990d11c3e',
-    dir: 'user2/',
-  },
-];
-
 app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   const keyFileName = process.env.GOOGLE_CLOUD_STORAGE_KEY_FILE;
   const storage = new Storage({ keyFileName });
@@ -48,10 +37,10 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   // the user isn't in the DB or the user's directory prefix isn't in the DB.
 
   const authenticatedUserID = req.auth.sub;
-  const authenticatedUser = mockUserDB.find(
-    (user) => user.id === authenticatedUserID,
-  );
+  const authenticatedUser = await byID(authenticatedUserID);
   const userDirectory = authenticatedUser.dir;
+
+  console.log(authenticatedUser);
 
   if (!userDirectory) {
     return res.json({ pdfs: [] });
@@ -78,4 +67,7 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   });
 });
 
-app.listen(3000, () => console.log('App started on port 3000'));
+(async function start() {
+  await connectToDb();
+  app.listen(3000, () => console.log('App started on port 3000'));
+})();
