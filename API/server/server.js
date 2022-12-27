@@ -43,7 +43,8 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   const keyFileName = process.env.GOOGLE_CLOUD_STORAGE_KEY_FILE;
   const storage = new Storage({ keyFileName });
 
-  // TODO: (David) I need to add error handling with express to handle what happens if
+  // TODO: VERY IMPORTANT!!!!!!!!!! (David)
+  // I need to add error handling with express to handle what happens if
   // the user isn't in the DB or the user's directory prefix isn't in the DB.
 
   const authenticatedUserID = req.auth.sub;
@@ -51,6 +52,10 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
     (user) => user.id === authenticatedUserID,
   );
   const userDirectory = authenticatedUser.dir;
+
+  if (!userDirectory) {
+    return res.json({ pdfs: [] });
+  }
 
   const [files] = await storage
     .bucket('digital_main_test_bucket')
@@ -68,7 +73,7 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
     }),
   );
 
-  res.json({
+  return res.json({
     pdfs: signedUrls,
   });
 });
