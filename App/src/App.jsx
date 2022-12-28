@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Auth0Provider } from '@auth0/auth0-react';
 import Page from './Page.jsx';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 
