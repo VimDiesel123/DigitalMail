@@ -1,9 +1,13 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Auth0Provider } from '@auth0/auth0-react';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import Page from './Page.jsx';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './scss/styles.scss';
+
+library.add(fas);
 
 const container = document.getElementById('root');
 const root = createRoot(container);
