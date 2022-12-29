@@ -1,22 +1,26 @@
 import React from 'react';
-import { Navbar, Container, Form, Nav, NavItem, NavLink } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Navbar, Container, Form, Nav, NavItem, NavLink, FormControl } from 'react-bootstrap';
 
 export default function NavBar() {
   return (
-    <Navbar bg="primary" variant="light" fixed="top">
+    <Navbar bg="dark" variant="dark" fixed="top">
       <Container>
-        <Navbar.Brand className="col-2">Digital Mail</Navbar.Brand>
-        <Nav fill>
-          <Nav.Item>
-            <Form>
-              <Form.Control type="search" placeholder="Search" />
-            </Form>
-          </Nav.Item>
+        <Navbar.Brand>Digital Mail</Navbar.Brand>
+        <Form>
+          <FormControl type="search" placeholder="Search" className="text-bg-dark" />
+        </Form>
+        <Nav>
           <NavItem>
-            <NavLink>
-              <FontAwesomeIcon icon="inbox" />
-            </NavLink>
+            <NavLink className="text-white">Inbox</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="text-white">Settings</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="text-white">About</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="text-white">Profile</NavLink>
           </NavItem>
         </Nav>
       </Container>
