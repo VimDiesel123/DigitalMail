@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ListGroup, ListGroupItem, Collapse } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Collapse, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,13 +25,25 @@ export default function FilterMenu() {
       <Collapse in={open}>
         <ListGroup>
           <ListGroupItem action>
-            <span>Important</span>
+            <Form>
+              <Form.Group>
+                <Form.Check type="checkbox" label="Important" />
+              </Form.Group>
+            </Form>
           </ListGroupItem>
           <ListGroupItem action>
-            <span>Scan Complete</span>
+            <Form>
+              <Form.Group>
+                <Form.Check type="checkbox" label="Scan Complete" />
+              </Form.Group>
+            </Form>
           </ListGroupItem>
           <ListGroupItem action>
-            <span>Scan Pending</span>
+            <Form>
+              <Form.Group>
+                <Form.Check type="checkbox" label="Scan Pending" />
+              </Form.Group>
+            </Form>
           </ListGroupItem>
         </ListGroup>
       </Collapse>

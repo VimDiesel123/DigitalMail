@@ -5,7 +5,7 @@ export default function GreetingCard() {
   const [visible, setVisible] = useState(true);
 
   return (
-    <Collapse timeout={200} appear in={visible}>
+    <Collapse timeout={250} appear in={visible}>
       <div>
         <Card bg="dark" border="info" text="light" className="w-75 mx-auto position-relative">
           <Card.Body>
@@ -13,7 +13,7 @@ export default function GreetingCard() {
               Welcome Back <b>BRO!</b>
             </Card.Title>
             <Card.Text className="text-info">
-              You have <b>1,000</b> unread mails.
+              You have <b>2</b> unread mails.
             </Card.Text>
           </Card.Body>
           <CloseButton

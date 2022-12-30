@@ -38,7 +38,7 @@ export default function Sidebar() {
           <small>SETTINGS</small>
         </ListGroupItem>
         <ProfileMenu />
-        <ListGroupItem action>
+        <ListGroupItem action variant="info">
           <div className="d-flex w-100 justify-content-start align-items-center">
             <span className="me-3">
               <FontAwesomeIcon icon={faCircleInfo} />
