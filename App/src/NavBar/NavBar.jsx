@@ -7,7 +7,7 @@ export default function NavBar() {
       <Container>
         <Navbar.Brand>Digital Mail</Navbar.Brand>
         <Form>
-          <FormControl type="search" placeholder="Search" className="text-bg-dark" />
+          <FormControl type="search" placeholder="Search" />
         </Form>
         <Nav>
           <NavItem>
