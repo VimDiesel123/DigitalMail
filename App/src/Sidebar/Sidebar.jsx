@@ -38,7 +38,6 @@ export default function Sidebar() {
           <small>SETTINGS</small>
         </ListGroupItem>
         <ProfileMenu />
-        <ListGroupItem className="d-flex text-muted align-items-center" />
         <ListGroupItem action>
           <div className="d-flex w-100 justify-content-start align-items-center">
             <span className="me-3">
@@ -47,6 +46,7 @@ export default function Sidebar() {
             <span>Help</span>
           </div>
         </ListGroupItem>
+        <ListGroupItem className="d-flex text-muted align-items-center" />
       </ListGroup>
     </div>
   );
