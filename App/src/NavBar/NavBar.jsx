@@ -3,7 +3,7 @@ import { Navbar, Container, Form, Nav, NavItem, NavLink, FormControl } from 'rea
 
 export default function NavBar() {
   return (
-    <Navbar bg="dark" variant="dark" fixed="top">
+    <Navbar expand="lg" bg="dark" variant="dark" fixed="top">
       <Container>
         <Navbar.Brand>Digital Mail</Navbar.Brand>
         <Form>
@@ -11,16 +11,16 @@ export default function NavBar() {
         </Form>
         <Nav>
           <NavItem>
-            <NavLink className="text-white">Inbox</NavLink>
+            <NavLink active>Inbox</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="text-white">Settings</NavLink>
+            <NavLink>Settings</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="text-white">About</NavLink>
+            <NavLink>About</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="text-white">Profile</NavLink>
+            <NavLink>Profile</NavLink>
           </NavItem>
         </Nav>
       </Container>

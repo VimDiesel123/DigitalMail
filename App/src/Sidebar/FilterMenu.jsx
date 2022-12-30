@@ -26,23 +26,17 @@ export default function FilterMenu() {
         <ListGroup>
           <ListGroupItem action>
             <Form>
-              <Form.Group>
-                <Form.Check type="checkbox" label="Important" />
-              </Form.Group>
+              <Form.Check type="checkbox" label="Important" />
             </Form>
           </ListGroupItem>
           <ListGroupItem action>
             <Form>
-              <Form.Group>
-                <Form.Check type="checkbox" label="Scan Complete" />
-              </Form.Group>
+              <Form.Check type="checkbox" label="Scan Complete" />
             </Form>
           </ListGroupItem>
           <ListGroupItem action>
             <Form>
-              <Form.Group>
-                <Form.Check type="checkbox" label="Scan Pending" />
-              </Form.Group>
+              <Form.Check type="checkbox" label="Scan Pending" />
             </Form>
           </ListGroupItem>
         </ListGroup>
