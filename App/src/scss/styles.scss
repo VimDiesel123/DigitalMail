@@ -1,11 +1,15 @@
-// $primary: #bb86fc;
-// $secondary: #03DAC6;
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
 
-// $body-color: #ffffff;
+// $theme-colors: (
+//  primary: #bb86fc
+// );
+
+// $body-color: #121212;
 // $body-bg: #121212;
 
 body{
-  padding-top: 50px
+  padding-top: 56px
 }
 
-@import "~bootstrap/scss/bootstrap";
+@import "bootstrap";
