@@ -1,10 +1,11 @@
 import React from 'react';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import GreetingCard from './GreetingCard.jsx';
 import PDFLink from './PDFLinks.jsx';
 import NavBar from './NavBar/NavBar.jsx';
 import Sidebar from './Sidebar/Sidebar.jsx';
+import MailList from './MailList/MailList.jsx';
 
 function Page() {
   return (
@@ -13,8 +14,9 @@ function Page() {
       <Container fluid className="p-0">
         <Row>
           <Sidebar />
-          <Col className="py-3">
+          <Col>
             <GreetingCard />
+            <MailList />
             <PDFLink />
           </Col>
         </Row>
