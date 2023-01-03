@@ -22,7 +22,7 @@ function MailItemRow() {
               <Form.Check type="checkbox" />
             </Form.Group>
           </Form>
-          <FontAwesomeIcon icon={faStarRegular} />
+          <FontAwesomeIcon icon={faStarRegular} className="text-body" />
           <Badge bg="info" className="p-1 rounded-circle border border-light">
             <span className="visually-hidden">Unread</span>
           </Badge>
@@ -56,8 +56,8 @@ function MailItemRow() {
 
 export default function MailTable() {
   return (
-    <Table hover>
-      <th className="p-0">
+    <Table hover bordered className="my-3">
+      <th className="text-bg-primary p-1 rounded-top" colSpan={4}>
         <Form>
           <Form.Group>
             <Form.Check type="checkbox" id="actionBarCheckBox" className="d-inline-block" />
