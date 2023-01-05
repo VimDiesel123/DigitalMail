@@ -3,7 +3,7 @@ import { Navbar, Container, Form, Nav, NavItem, NavLink, FormControl } from 'rea
 
 export default function NavBar() {
   return (
-    <Navbar expand="lg" bg="dark" variant="dark" fixed="top">
+    <Navbar expand="lg" bg="secondary" variant="dark" fixed="top">
       <Container>
         <Navbar.Brand>Digital Mail</Navbar.Brand>
         <Form>
