@@ -1,12 +1,7 @@
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/functions.scss";
+@import "../../node_modules/bootstrap/scss/_variables.scss";
 
-// $theme-colors: (
-//  primary: #bb86fc
-// );
-
-// $body-color: #121212;
-// $body-bg: #121212;
+$pagination-border-width: 0;
 
 body{
   padding-top: 56px

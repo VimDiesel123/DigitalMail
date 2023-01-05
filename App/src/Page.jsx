@@ -17,7 +17,7 @@ function Page() {
           <Col className="p-4">
             <GreetingCard />
             <MailList />
-            <PDFLink />
+            {/* <PDFLink /> */}
           </Col>
         </Row>
       </Container>

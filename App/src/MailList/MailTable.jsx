@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Form, Dropdown, Badge } from 'react-bootstrap';
+import { Table, Form, Dropdown, Badge, Pagination } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
@@ -56,7 +56,7 @@ function MailItemRow() {
 
 export default function MailTable() {
   return (
-    <Table hover bordered className="my-3">
+    <Table hover bordered className="mt-3 mb-0">
       <th className="text-bg-primary p-1 rounded-top" colSpan={4}>
         <Form>
           <Form.Group>
@@ -80,6 +80,17 @@ export default function MailTable() {
         </Form>
       </th>
       <tbody>
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
+        <MailItemRow />
         <MailItemRow />
         <MailItemRow />
         <MailItemRow />
