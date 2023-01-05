@@ -14,7 +14,7 @@ function Page() {
       <Container fluid className="p-0">
         <Row className="g-0">
           <Sidebar />
-          <Col className="p-4">
+          <Col>
             <GreetingCard />
             <MailList />
             {/* <PDFLink /> */}
