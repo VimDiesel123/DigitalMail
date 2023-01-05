@@ -7,7 +7,7 @@ import ProfileMenu from './ProfileMenu.jsx';
 
 export default function Sidebar() {
   return (
-    <div className="d-block col-2 min-vh-100 pe-0" style={{ width: '230px' }}>
+    <div className="col-2">
       <ListGroup>
         <ListGroupItem className="d-flex text-muted align-items-center">
           <small>MAIN MENU</small>

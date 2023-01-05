@@ -12,9 +12,9 @@ function Page() {
     <div>
       <NavBar />
       <Container fluid className="p-0">
-        <Row>
+        <Row className="g-0">
           <Sidebar />
-          <Col>
+          <Col className="p-4">
             <GreetingCard />
             <MailList />
             <PDFLink />
