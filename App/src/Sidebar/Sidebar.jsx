@@ -7,8 +7,8 @@ import ProfileMenu from './ProfileMenu.jsx';
 
 export default function Sidebar() {
   return (
-    <div className="col-2">
-      <ListGroup>
+    <div className="col-2 d-flex flex-column">
+      <ListGroup className="flex-fill">
         <ListGroupItem className="d-flex text-muted align-items-center">
           <small>MAIN MENU</small>
         </ListGroupItem>
@@ -46,7 +46,7 @@ export default function Sidebar() {
             <span>Help</span>
           </div>
         </ListGroupItem>
-        <ListGroupItem className="d-flex text-muted align-items-center" />
+        <ListGroupItem className="d-flex text-muted align-items-center flex-fill" />
       </ListGroup>
     </div>
   );
