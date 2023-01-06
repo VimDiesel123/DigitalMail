@@ -9,6 +9,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 function MailItemRow() {
   return (
     <tr>

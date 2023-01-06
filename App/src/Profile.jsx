@@ -23,6 +23,7 @@ function Profile() {
           },
         });
 
+        // eslint-disable-next-line camelcase
         const { user_metadata } = await metadataResponse.json();
 
         setUserMetadata(user_metadata);

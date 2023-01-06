@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCow } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faLinkedin, faFacebook } from '@fortawesome/free-brands-svg-icons';
 
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 export default function Footer() {
   return (
     <Container fluid>
