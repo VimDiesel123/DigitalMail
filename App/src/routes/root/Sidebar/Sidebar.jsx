@@ -39,7 +39,7 @@ export default function Sidebar() {
           <small>SETTINGS</small>
         </ListGroupItem>
         <ProfileMenu />
-        <ListGroupItem action variant="info">
+        <ListGroupItem action variant="info" as={Link} to="help">
           <div className="d-flex w-100 justify-content-start align-items-center">
             <span className="me-3">
               <FontAwesomeIcon icon={faCircleInfo} />

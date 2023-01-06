@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 import Root from './routes/root/Root.jsx';
 import MailList from './routes/MailList/MailList.jsx';
+import Help from './routes/Help.jsx';
 
 import './scss/styles.scss';
 
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route path="inbox" element={<MailList />} />
+      <Route path="help" element={<Help />} />
     </Route>
   )
 );
