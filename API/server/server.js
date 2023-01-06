@@ -3,6 +3,7 @@ require('dotenv').config();
 const { Storage } = require('@google-cloud/storage');
 const { expressjwt: jwt } = require('express-jwt');
 const jwks = require('jwks-rsa');
+const path = require('path');
 const { connectToDb } = require('./db');
 const { byID } = require('./user');
 
@@ -65,6 +66,10 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   return res.json({
     pdfs: signedUrls,
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../App/dist', 'index.html'));
 });
 
 (async function start() {
