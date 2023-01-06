@@ -11,7 +11,7 @@ export default function Footer() {
         <footer className="d-flex justify-content-between align-items-center py-3 border-top">
           <Col md={4} className="mx-5 px-5 text-muted">
             <a href="#" className="me-2 text-muted text-decoration-none lh-1">
-              <FontAwesomeIcon icon={faCow} size="md" />
+              <FontAwesomeIcon icon={faCow} size="lg" />
             </a>
             <span>© 2023 David is Awesome, Inc</span>
           </Col>

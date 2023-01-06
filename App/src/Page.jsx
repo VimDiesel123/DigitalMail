@@ -1,11 +1,11 @@
 import React from 'react';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import { Container, Row, Col } from 'react-bootstrap';
-import GreetingCard from './GreetingCard.jsx';
-import NavBar from './NavBar/NavBar.jsx';
-import Sidebar from './Sidebar/Sidebar.jsx';
-import MailList from './MailList/MailList.jsx';
-import Footer from './Footer/Footer.jsx';
+import GreetingCard from './routes/MailList/GreetingCard.jsx';
+import NavBar from './routes/root/NavBar/NavBar.jsx';
+import Sidebar from './routes/root/Sidebar/Sidebar.jsx';
+import MailList from './routes/MailList/MailList.jsx';
+import Footer from './routes/root/Footer/Footer.jsx';
 
 function Page() {
   return (
@@ -17,7 +17,6 @@ function Page() {
           <Col>
             <GreetingCard />
             <MailList />
-            {/* <PDFLink /> */}
           </Col>
         </Row>
         <Footer />

@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInbox, faTrash, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import FilterMenu from './FilterMenu.jsx';
 import ProfileMenu from './ProfileMenu.jsx';
 
@@ -12,7 +13,7 @@ export default function Sidebar() {
         <ListGroupItem className="d-flex text-muted align-items-center">
           <small>MAIN MENU</small>
         </ListGroupItem>
-        <ListGroupItem action>
+        <ListGroupItem action as={Link} to="inbox">
           <div className="d-flex w-100 justify-content-start align-items-center">
             <span className="me-3">
               <FontAwesomeIcon icon={faInbox} />
