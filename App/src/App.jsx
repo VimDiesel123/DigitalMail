@@ -14,6 +14,7 @@ import MailList from './routes/MailList/MailList.jsx';
 import Help from './routes/Help.jsx';
 
 import './scss/styles.scss';
+import Trash from './routes/Trash.jsx';
 
 library.add(fas);
 
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Root />}>
       <Route path="inbox" element={<MailList />} />
       <Route path="help" element={<Help />} />
+      <Route path="trash" element={<Trash />} />
     </Route>
   )
 );

@@ -27,7 +27,7 @@ export default function Sidebar() {
           </div>
         </ListGroupItem>
         <FilterMenu />
-        <ListGroupItem action>
+        <ListGroupItem action as={Link} to="trash">
           <div className="d-flex w-100 justify-content-start align-items-center">
             <span className="me-3">
               <FontAwesomeIcon icon={faTrash} />
