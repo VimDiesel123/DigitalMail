@@ -11,7 +11,7 @@ function Page() {
   return (
     <div>
       <NavBar />
-      <Container fluid className="p-0">
+      <Container fluid className="g-0">
         <Row className="g-0">
           <Sidebar />
           <Col>

@@ -17,21 +17,23 @@ import Search from './Search.jsx';
 export default function NavBar() {
   return (
     <Navbar expand="lg" bg="dark" variant="dark">
-      <Container>
+      <Container fluid>
         <Navbar.Brand className="d-flex align-items-center">
           <FontAwesomeIcon icon={faCow} size="xl" />
           <span className="ms-3 display-4 fs-4">Digital Mail</span>
         </Navbar.Brand>
-        <Search />
+        <div className="w-25">
+          <Search />
+        </div>
         <Nav>
           <NavItem>
             <NavLink active>
               <div className="position-relative">
                 <FontAwesomeIcon icon={faInbox} size="lg" />
                 <Badge
-                  bg="info"
+                  bg="warning"
                   className="rounded-circle position-absolute top-0 end-0"
-                  style={{ marginTop: '-1px', marginRight: '-1px', padding: '.3rem' }}
+                  style={{ marginTop: '-1px', marginRight: '-2px', padding: '.3rem' }}
                 >
                   <span className="visually-hidden">Unread</span>
                 </Badge>
@@ -56,7 +58,7 @@ export default function NavBar() {
                     <FontAwesomeIcon icon={faUser} size="lg" />
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Header>User Settings</Dropdown.Header>
+                    <Dropdown.Header>User</Dropdown.Header>
                     <Dropdown.Item>Profile or something</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

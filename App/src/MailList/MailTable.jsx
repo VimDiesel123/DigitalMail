@@ -56,7 +56,7 @@ function MailItemRow() {
 
 export default function MailTable() {
   return (
-    <Table hover bordered className="mt-3 mb-0">
+    <Table hover className="mt-3 mb-0">
       <th className="text-bg-primary p-1 rounded-top" colSpan={4}>
         <Form>
           <Form.Group>

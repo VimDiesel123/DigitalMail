@@ -8,5 +8,5 @@ const options = [
 ];
 
 export default function Search() {
-  return <Select options={options} placeholder="Search..." className="w-50" />;
+  return <Select options={options} placeholder="Search..." />;
 }
