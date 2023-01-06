@@ -9,7 +9,6 @@ import {
   RouterProvider,
   Route,
 } from 'react-router-dom';
-import Page from './Page.jsx';
 import Root from './routes/root/Root.jsx';
 import MailList from './routes/MailList/MailList.jsx';
 
@@ -32,7 +31,7 @@ root.render(
   <Auth0Provider
     domain="dev-6xzvx6amw4huzdgq.us.auth0.com"
     clientId="rcemq97nBaT1z5qWiuzy2JzeuE2qXoNI"
-    redirectUri="http://localhost:3000/"
+    redirectUri="http://localhost:3000/inbox"
     audience="https://digitalmail.com/api"
   >
     <RouterProvider router={router} />

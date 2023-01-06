@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Form, Dropdown, Badge, Pagination } from 'react-bootstrap';
+import { Table, Form, Dropdown, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,

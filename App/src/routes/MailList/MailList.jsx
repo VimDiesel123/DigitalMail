@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import MailTable from './MailTable.jsx';
+import GreetingCard from './GreetingCard.jsx';
 
 export default function MailList() {
   const active = 1;
@@ -16,6 +17,7 @@ export default function MailList() {
 
   return (
     <div className="d-flex flex-column">
+      <GreetingCard />
       <MailTable />
       <div className="d-flex align-items-center border border-top-0 rounded-bottom">
         <Pagination className="ms-auto my-0 py-1">
@@ -29,3 +31,5 @@ export default function MailList() {
     </div>
   );
 }
+
+
