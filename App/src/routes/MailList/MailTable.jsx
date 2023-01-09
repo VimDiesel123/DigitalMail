@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Form, Dropdown, Badge } from 'react-bootstrap';
+import { Table, Form, Dropdown, Badge, Collapse } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
@@ -8,11 +8,11 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
-import PropTypes, { bool, string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-function MailItemRow({ link, sender, dateRecieved }) {
+function MailItemRow({ unread, link, sender, dateRecieved, onLinkClicked }) {
   return (
     <tr>
       <td>
@@ -26,10 +26,18 @@ function MailItemRow({ link, sender, dateRecieved }) {
             </Form.Group>
           </Form>
           <FontAwesomeIcon icon={faStarRegular} className="text-body" />
-          <Badge bg="info" className="p-1 rounded-circle border border-light">
-            <span className="visually-hidden">Unread</span>
-          </Badge>
-          <a href={link} className="text-body" target="_blank" rel="noreferrer noopener">
+          <Collapse in={unread}>
+            <Badge bg="info" className="p-1 rounded-circle border border-light">
+              <span className="visually-hidden">Unread</span>
+            </Badge>
+          </Collapse>
+          <a
+            href={link}
+            onClick={onLinkClicked}
+            className="text-body"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             <FontAwesomeIcon icon={faUpRightFromSquare} />
           </a>
         </div>
@@ -58,12 +66,15 @@ function MailItemRow({ link, sender, dateRecieved }) {
 }
 
 MailItemRow.propTypes = {
+  unread: PropTypes.bool,
   link: PropTypes.string.isRequired,
   sender: PropTypes.string,
   dateRecieved: PropTypes.string,
+  onLinkClicked: PropTypes.func.isRequired,
 };
 
 MailItemRow.defaultProps = {
+  unread: false,
   sender: 'Uknown',
   dateRecieved: 'Uknown',
 };
@@ -73,9 +84,13 @@ export default function MailTable({ mail }) {
     ? mail.map((item) => (
         <MailItemRow
           key={item.id}
+          unread={item.unread}
           link={item.signedUrl}
           sender={item.sender}
           dateRecieved={new Date(item.date_recieved).toLocaleDateString()}
+          onLinkClicked={() => {
+            item.unread = false;
+          }}
         />
       ))
     : null;
@@ -114,19 +129,6 @@ export default function MailTable({ mail }) {
     </Table>
   );
 }
-
-MailTable.propTypes = {
-  mail: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      signedUrl: PropTypes.string.isRequired,
-      unread: PropTypes.bool.isRequired,
-      favorited: PropTypes.bool.isRequired,
-      dateRecieved: PropTypes.string,
-      sender: PropTypes.string,
-    })
-  ),
-};
 
 MailTable.defaultProps = {
   mail: [],

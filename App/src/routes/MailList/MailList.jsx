@@ -36,6 +36,24 @@ export default function MailList() {
     fetchData();
   }, [getAccessTokenSilently]);
 
+  // DELETE THIS TESTING
+  useEffect(() => {
+    async function markMailAsRead() {
+      const accessToken = await getAccessTokenSilently();
+
+      const response = await fetch('/api/user/pdfs/?id=ObjectId(%2763bc4d3db64fd3a1ca91a396%27)', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      console.log(response);
+    }
+    markMailAsRead();
+  }, [getAccessTokenSilently]);
+
   return (
     <div className="d-flex flex-column">
       <GreetingCard />
