@@ -11,7 +11,7 @@ import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-function MailItemRow() {
+function MailItemRow({ link }) {
   return (
     <tr>
       <td>
@@ -28,7 +28,7 @@ function MailItemRow() {
           <Badge bg="info" className="p-1 rounded-circle border border-light">
             <span className="visually-hidden">Unread</span>
           </Badge>
-          <a href="#" className="text-body">
+          <a href={link} className="text-body" target="_blank" rel="noreferrer noopener">
             <FontAwesomeIcon icon={faUpRightFromSquare} />
           </a>
         </div>
@@ -56,7 +56,10 @@ function MailItemRow() {
   );
 }
 
-export default function MailTable() {
+export default function MailTable({ mail }) {
+  const mailRows = mail
+    ? mail.map((item) => <MailItemRow key={item.id} link={item.signedUrl} />)
+    : null;
   return (
     <Table hover className="mt-3 mb-0" striped responsive>
       <th className="text-bg-primary p-1 rounded-top" colSpan={4}>
@@ -81,22 +84,7 @@ export default function MailTable() {
           </Form.Group>
         </Form>
       </th>
-      <tbody>
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-        <MailItemRow />
-      </tbody>
+      <tbody>{mailRows}</tbody>
     </Table>
   );
 }

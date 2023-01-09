@@ -1,11 +1,11 @@
 const express = require('express');
 require('dotenv').config();
-const { Storage } = require('@google-cloud/storage');
 const { expressjwt: jwt } = require('express-jwt');
 const jwks = require('jwks-rsa');
 const path = require('path');
 const { connectToDb } = require('./db');
-const { byID } = require('./user');
+const user = require('./user');
+const signedUrls = require('./signed_url');
 
 const app = express();
 
@@ -30,41 +30,24 @@ const jwtCheck = jwt({
 });
 
 app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
-  const keyFileName = process.env.GOOGLE_CLOUD_STORAGE_KEY_FILE;
-  const storage = new Storage({ keyFileName });
-
   // TODO: VERY IMPORTANT!!!!!!!!!! (David)
   // I need to add error handling with express to handle what happens if
   // the user isn't in the DB or the user's directory prefix isn't in the DB.
 
   const authenticatedUserID = req.auth.sub;
-  const authenticatedUser = await byID(authenticatedUserID);
+  const authenticatedUser = await user.byID(authenticatedUserID);
   const userDirectory = authenticatedUser.dir;
-
-  console.log(authenticatedUser);
 
   if (!userDirectory) {
     return res.json({ pdfs: [] });
   }
 
-  const [files] = await storage
-    .bucket('digital_main_test_bucket')
-    .getFiles({ prefix: userDirectory });
+  const mail = await signedUrls.withSignedUrl(authenticatedUser.mail);
 
-  const pdfs = files.filter((file) => file.name.endsWith('.pdf'));
-
-  const signedUrls = await Promise.all(
-    pdfs.map((file) => {
-      const options = {
-        action: 'read',
-        expires: Date.now() + 1000 * 60 * 60, // 1 hour
-      };
-      return file.getSignedUrl(options);
-    }),
-  );
+  console.log(mail);
 
   return res.json({
-    pdfs: signedUrls,
+    mail,
   });
 });
 
