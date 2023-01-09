@@ -8,11 +8,11 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
-import PropTypes from 'prop-types';
+import PropTypes, { bool, string } from 'prop-types';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-function MailItemRow({ link }) {
+function MailItemRow({ link, sender, dateRecieved }) {
   return (
     <tr>
       <td>
@@ -34,8 +34,8 @@ function MailItemRow({ link }) {
           </a>
         </div>
       </td>
-      <td>Sender</td>
-      <td>Date Recieved</td>
+      <td>{sender}</td>
+      <td>{dateRecieved}</td>
       <td>
         <Dropdown>
           <Dropdown.Toggle as={FontAwesomeIcon} icon={faEllipsisVertical} role="button" />
@@ -59,17 +59,31 @@ function MailItemRow({ link }) {
 
 MailItemRow.propTypes = {
   link: PropTypes.string.isRequired,
+  sender: PropTypes.string,
+  dateRecieved: PropTypes.string,
+};
+
+MailItemRow.defaultProps = {
+  sender: 'Uknown',
+  dateRecieved: 'Uknown',
 };
 
 export default function MailTable({ mail }) {
   const mailRows = mail
-    ? mail.map((item) => <MailItemRow key={item.id} link={item.signedUrl} />)
+    ? mail.map((item) => (
+        <MailItemRow
+          key={item.id}
+          link={item.signedUrl}
+          sender={item.sender}
+          dateRecieved={new Date(item.date_recieved).toLocaleDateString()}
+        />
+      ))
     : null;
   return (
-    <Table hover className="mt-3 mb-0" striped responsive>
-      <thead>
+    <Table hover className="mt-3 mb-0" striped>
+      <thead className="text-bg-primary p-1">
         <tr>
-          <th className="text-bg-primary p-1 rounded-top" colSpan={4}>
+          <th>
             <Form>
               <Form.Group>
                 <Form.Check type="checkbox" id="actionBarCheckBox" className="d-inline-block" />
@@ -91,6 +105,9 @@ export default function MailTable({ mail }) {
               </Form.Group>
             </Form>
           </th>
+          <th>Sender</th>
+          <th>Date Recieved</th>
+          <th> </th>
         </tr>
       </thead>
       <tbody>{mailRows}</tbody>
@@ -102,9 +119,11 @@ MailTable.propTypes = {
   mail: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      path: PropTypes.string.isRequired,
+      signedUrl: PropTypes.string.isRequired,
       unread: PropTypes.bool.isRequired,
       favorited: PropTypes.bool.isRequired,
+      dateRecieved: PropTypes.string,
+      sender: PropTypes.string,
     })
   ),
 };
