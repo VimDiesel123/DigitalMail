@@ -8,6 +8,7 @@ import {
   createRoutesFromElements,
   RouterProvider,
   Route,
+  redirect,
 } from 'react-router-dom';
 import Root from './routes/root/Root.jsx';
 import MailList from './routes/MailList/MailList.jsx';
@@ -24,6 +25,7 @@ const root = createRoot(container);
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
+      <Route index loader={() => redirect('inbox')} />
       <Route path="inbox" element={<MailList />} />
       <Route path="help" element={<Help />} />
       <Route path="trash" element={<Trash />} />
