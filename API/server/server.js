@@ -6,6 +6,7 @@ const path = require('path');
 const { connectToDb } = require('./db');
 const user = require('./user');
 const signedUrls = require('./signed_url');
+const mail = require('./mail');
 
 const app = express();
 
@@ -42,13 +43,22 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
     return res.json({ pdfs: [] });
   }
 
-  const mail = await signedUrls.withSignedUrl(authenticatedUser.mail);
-
-  console.log(mail);
+  const mailWithUrls = await signedUrls.withSignedUrl(authenticatedUser.mail);
 
   return res.json({
-    mail,
+    mail: mailWithUrls,
   });
+});
+
+// Update mail item:
+app.patch('/api/user/pdfs/:id', (req, res) => {
+  if (!mail.markAsRead(req.params.id)) {
+    console.log('Failed');
+    res.sendStatus(500);
+  } else {
+    res.sendStatus(200);
+    console.log('Success');
+  }
 });
 
 app.get('*', (req, res) => {
