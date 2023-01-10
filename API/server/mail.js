@@ -8,6 +8,8 @@ async function byID(mailId) {
   return user.mail.find((mail) => mail.id === mailId);
 }
 
+// TODO: (David) YIKES! DRY this out!
+
 async function markAsRead(mailId) {
   const db = getDb();
 
@@ -60,4 +62,38 @@ async function recover(mailId) {
   return modifiedCount === 1;
 }
 
-module.exports = { byID, markAsRead, trash, recover };
+async function favorite(mailId) {
+  const db = getDb();
+  const objectId = ObjectId(mailId);
+
+  const options = { upsert: false };
+
+  const { modifiedCount } = await db
+    .collection('users')
+    .updateOne(
+      { mail: { $elemMatch: { id: objectId } } },
+      { $set: { 'mail.$.favorited': true } },
+      options,
+    );
+
+  return modifiedCount === 1;
+}
+
+async function unfavorite(mailId) {
+  const db = getDb();
+  const objectId = ObjectId(mailId);
+
+  const options = { upsert: false };
+
+  const { modifiedCount } = await db
+    .collection('users')
+    .updateOne(
+      { mail: { $elemMatch: { id: objectId } } },
+      { $set: { 'mail.$.favorited': false } },
+      options,
+    );
+
+  return modifiedCount === 1;
+}
+
+module.exports = { byID, markAsRead, trash, recover, favorite, unfavorite };

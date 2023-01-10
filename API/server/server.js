@@ -45,14 +45,47 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   });
 });
 
-// Mark mail item as read:
-app.patch('/api/user/pdfs/:id', async (req, res) => {
-  const markedAsRead = await mail.markAsRead(req.params.id);
+// TODO: (David) Holy Camole this is bad!
 
-  if (!markedAsRead) {
-    res.sendStatus(500);
+// Mark mail item as read or favorited:
+app.patch('/api/user/pdfs/:id', async (req, res, next) => {
+  const { id } = req.params;
+  const { read, favorite } = req.query;
+
+  if (read === 'true') {
+    try {
+      const markedAsRead = await mail.markAsRead(id);
+      return markedAsRead
+        ? res.status(200).send('Item read')
+        : res.status(500).send('Failed to mark item as read');
+    } catch (err) {
+      next(err);
+    }
+  }
+  if (favorite === 'true') {
+    try {
+      const favorited = await mail.favorite(id);
+      if (favorited) {
+        console.info('\x1b[35m%s\x1b[0m', `Mail with id: ${req.params.id} favorited.`);
+        return res.status(200).send('Mail item favorited.');
+      }
+      return res.status(500).send('Failed to favorite mail item');
+    } catch (err) {
+      next(err);
+    }
+  } else if (favorite === 'false') {
+    try {
+      const unfavorited = await mail.unfavorite(id);
+      if (unfavorited) {
+        console.info('\x1b[34m%s\x1b[0m', `Mail with id: ${req.params.id} unfavorited.`);
+        return res.status(200).send('Mail item unfavorited.');
+      }
+      return res.status(500).send('Failed to unfavorite mail item');
+    } catch (err) {
+      next(err);
+    }
   } else {
-    res.status(500).send('Error marking mail as read.');
+    return res.status(400).json({ error: 'Invalid query parameters' });
   }
 });
 
@@ -62,7 +95,7 @@ app.delete('/api/user/pdfs/:id', async (req, res, next) => {
     const trashed = await mail.trash(req.params.id);
 
     if (trashed) {
-      console.info('\x1b[33m%s"\x1b[0m', `Mail with id: ${req.params.id} sent to trash`);
+      console.info('\x1b[33m%s\x1b[0m', `Mail with id: ${req.params.id} sent to trash`);
       return res.status(200).send('Item sent to trash');
     }
 
@@ -78,7 +111,7 @@ app.put('/api/user/pdfs/:id', async (req, res, next) => {
     const recovered = await mail.recover(req.params.id);
 
     if (recovered) {
-      console.info('\x1b[32m%s"\x1b[0m', `Mail with id: ${req.params.id} removed from trash`);
+      console.info('\x1b[32m%s\x1b[0m', `Mail with id: ${req.params.id} removed from trash`);
       return res.status(200).send('Item removed from trash');
     }
 
