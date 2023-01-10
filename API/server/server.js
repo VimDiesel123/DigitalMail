@@ -33,13 +33,12 @@ const jwtCheck = jwt({
 app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   // TODO: VERY IMPORTANT!!!!!!!!!! (David)
   // I need to add error handling with express to handle what happens if
-  // the user isn't in the DB or the user's directory prefix isn't in the DB.
+  // the user isn't in the DB.
 
   const authenticatedUserID = req.auth.sub;
   const authenticatedUser = await user.byID(authenticatedUserID);
-  const userDirectory = authenticatedUser.dir;
 
-  if (!userDirectory) {
+  if (!authenticatedUser) {
     return res.json({ pdfs: [] });
   }
 
@@ -51,8 +50,15 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
 });
 
 // Update mail item:
-app.patch('/api/user/pdfs/:id', (req, res) => {
-  if (!mail.markAsRead(req.params.id)) {
+app.patch('/api/user/pdfs/:id', async (req, res) => {
+  console.log('HERE handling the route!');
+  console.log('Request Id: ', req.params.id);
+
+  const markedAsRead = await mail.markAsRead(req.params.id);
+
+  console.log(markedAsRead);
+
+  if (!markedAsRead) {
     console.log('Failed');
     res.sendStatus(500);
   } else {

@@ -1,3 +1,4 @@
+const mongo = require('mongodb');
 const { getDb } = require('./db');
 
 async function byID(mailId) {
@@ -11,9 +12,17 @@ async function markAsRead(mailId) {
   const db = getDb();
 
   const options = { upsert: false };
+
+  const objectId = mongo.ObjectId(mailId);
+
   const { modifiedCount } = await db
     .collection('users')
-    .updateOne({ mail: { $elemMatch: { mailId } } }, { $set: { 'mail.$.unread': false } }, options);
+    .updateOne(
+      { mail: { $elemMatch: { id: objectId } } },
+      { $set: { 'mail.$.unread': false } },
+      options,
+    );
+
   return modifiedCount === 1;
 }
 
