@@ -26,4 +26,38 @@ async function markAsRead(mailId) {
   return modifiedCount === 1;
 }
 
-module.exports = { byID, markAsRead };
+async function trash(mailId) {
+  const db = getDb();
+  const objectId = ObjectId(mailId);
+
+  const options = { upsert: false };
+
+  const { modifiedCount } = await db
+    .collection('users')
+    .updateOne(
+      { mail: { $elemMatch: { id: objectId } } },
+      { $set: { 'mail.$.trashed': true } },
+      options,
+    );
+
+  return modifiedCount === 1;
+}
+
+async function recover(mailId) {
+  const db = getDb();
+  const objectId = ObjectId(mailId);
+
+  const options = { upsert: false };
+
+  const { modifiedCount } = await db
+    .collection('users')
+    .updateOne(
+      { mail: { $elemMatch: { id: objectId } } },
+      { $set: { 'mail.$.trashed': false } },
+      options,
+    );
+
+  return modifiedCount === 1;
+}
+
+module.exports = { byID, markAsRead, trash, recover };

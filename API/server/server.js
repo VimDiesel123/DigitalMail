@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 require('dotenv').config();
 const { expressjwt: jwt } = require('express-jwt');
@@ -51,7 +52,39 @@ app.patch('/api/user/pdfs/:id', async (req, res) => {
   if (!markedAsRead) {
     res.sendStatus(500);
   } else {
-    res.sendStatus(200);
+    res.status(500).send('Error marking mail as read.');
+  }
+});
+
+// Send mail item to trash.
+app.delete('/api/user/pdfs/:id', async (req, res, next) => {
+  try {
+    const trashed = await mail.trash(req.params.id);
+
+    if (trashed) {
+      console.info('\x1b[33m%s"\x1b[0m', `Mail with id: ${req.params.id} sent to trash`);
+      return res.status(200).send('Item sent to trash');
+    }
+
+    return res.status(500).send('Error moving mail to Trash.');
+  } catch (err) {
+    return next(err);
+  }
+});
+
+// Recover mail item from trash.
+app.put('/api/user/pdfs/:id', async (req, res, next) => {
+  try {
+    const recovered = await mail.recover(req.params.id);
+
+    if (recovered) {
+      console.info('\x1b[32m%s"\x1b[0m', `Mail with id: ${req.params.id} removed from trash`);
+      return res.status(200).send('Item removed from trash');
+    }
+
+    return res.status(500).send('Error moving mail out of Trash');
+  } catch (err) {
+    return next(err);
   }
 });
 
