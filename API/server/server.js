@@ -12,12 +12,6 @@ const app = express();
 
 app.use(express.static('../App/dist'));
 
-const greetingMessage = 'Hello from the API!';
-
-app.get('/api/greeting', (req, res) => {
-  res.send(greetingMessage);
-});
-
 const jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -30,6 +24,7 @@ const jwtCheck = jwt({
   algorithms: ['RS256'],
 });
 
+// Return all mail items for user.
 app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   // TODO: VERY IMPORTANT!!!!!!!!!! (David)
   // I need to add error handling with express to handle what happens if
@@ -49,24 +44,18 @@ app.get('/api/user/pdfs', jwtCheck, async (req, res) => {
   });
 });
 
-// Update mail item:
+// Mark mail item as read:
 app.patch('/api/user/pdfs/:id', async (req, res) => {
-  console.log('HERE handling the route!');
-  console.log('Request Id: ', req.params.id);
-
   const markedAsRead = await mail.markAsRead(req.params.id);
 
-  console.log(markedAsRead);
-
   if (!markedAsRead) {
-    console.log('Failed');
     res.sendStatus(500);
   } else {
     res.sendStatus(200);
-    console.log('Success');
   }
 });
 
+// Catch-all route to return home page.
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../App/dist', 'index.html'));
 });

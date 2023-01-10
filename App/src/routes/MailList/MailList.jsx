@@ -19,45 +19,50 @@ export default function MailList() {
   const [mails, setMail] = useState();
   const { getAccessTokenSilently } = useAuth0();
 
-  useEffect(() => {
-    async function fetchData() {
-      const accessToken = await getAccessTokenSilently();
+  const fetchMail = async () => {
+    const accessToken = await getAccessTokenSilently();
 
-      const response = await fetch(`/api/user/pdfs`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const { mail } = await response.json();
+    const response = await fetch(`/api/user/pdfs`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const { mail } = await response.json();
+    return mail;
+  };
+
+  const markMailAsRead = async (mailId) => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await fetch(`api/user/pdfs/${mailId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    // TODO: (David) This is really inefficient and could cause problems. I'm refetching all the mail when only one is updated.
+    const updatedMail = await fetchMail();
+    setMail(updatedMail);
+
+    console.log(response);
+  };
+
+  useEffect(() => {
+    async function updateMail() {
+      const mail = await fetchMail();
       setMail(mail);
     }
-    fetchData();
-  }, [getAccessTokenSilently]);
-
-  // DELETE THIS TESTING
-  useEffect(() => {
-    async function markMailAsRead() {
-      const accessToken = await getAccessTokenSilently();
-
-      const response = await fetch('/api/user/pdfs/?id=ObjectId(%2763bc4d3db64fd3a1ca91a396%27)', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      console.log(response);
-    }
-    markMailAsRead();
-  }, [getAccessTokenSilently]);
+    updateMail();
+  });
 
   return (
     <div className="d-flex flex-column">
       <GreetingCard />
-      <MailTable mail={mails} />
+      <MailTable mail={mails} markMailAsRead={markMailAsRead} />
       <div className="d-flex align-items-center border border-top-0 rounded-bottom">
         <Pagination className="ms-auto my-0 py-1">
           <Pagination.First />

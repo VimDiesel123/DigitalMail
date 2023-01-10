@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Form, Dropdown, Badge, Collapse } from 'react-bootstrap';
+import { Table, Form, Dropdown, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-function MailItemRow({ unread, link, sender, dateRecieved, onLinkClicked }) {
+function MailItemRow({ id, unread, link, sender, dateRecieved, onLinkClicked }) {
   return (
     <tr>
       <td>
@@ -26,17 +26,20 @@ function MailItemRow({ unread, link, sender, dateRecieved, onLinkClicked }) {
             </Form.Group>
           </Form>
           <FontAwesomeIcon icon={faStarRegular} className="text-body" />
-          <Collapse in={unread}>
-            <Badge bg="info" className="p-1 rounded-circle border border-light">
-              <span className="visually-hidden">Unread</span>
-            </Badge>
-          </Collapse>
+          <Badge
+            bg="info"
+            className={`${unread ? 'visible' : 'invisible'} p-1 rounded-circle border border-light`}
+          >
+            <span className="visually-hidden">Unread</span>
+          </Badge>
           <a
             href={link}
-            onClick={onLinkClicked}
+            onClick={() => {
+              onLinkClicked(id);
+            }}
             className="text-body"
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noreferrer"
           >
             <FontAwesomeIcon icon={faUpRightFromSquare} />
           </a>
@@ -66,6 +69,7 @@ function MailItemRow({ unread, link, sender, dateRecieved, onLinkClicked }) {
 }
 
 MailItemRow.propTypes = {
+  id: PropTypes.string.isRequired,
   unread: PropTypes.bool,
   link: PropTypes.string.isRequired,
   sender: PropTypes.string,
@@ -79,18 +83,17 @@ MailItemRow.defaultProps = {
   dateRecieved: 'Uknown',
 };
 
-export default function MailTable({ mail }) {
+export default function MailTable({ mail, markMailAsRead }) {
   const mailRows = mail
     ? mail.map((item) => (
         <MailItemRow
           key={item.id}
+          id={item.id}
           unread={item.unread}
           link={item.signedUrl}
           sender={item.sender}
           dateRecieved={new Date(item.date_recieved).toLocaleDateString()}
-          onLinkClicked={() => {
-            item.unread = false;
-          }}
+          onLinkClicked={markMailAsRead}
         />
       ))
     : null;
@@ -129,6 +132,12 @@ export default function MailTable({ mail }) {
     </Table>
   );
 }
+
+MailTable.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  mail: PropTypes.object,
+  markMailAsRead: PropTypes.func.isRequired,
+};
 
 MailTable.defaultProps = {
   mail: [],

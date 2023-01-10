@@ -1,4 +1,4 @@
-const mongo = require('mongodb');
+const { ObjectId } = require('mongodb');
 const { getDb } = require('./db');
 
 async function byID(mailId) {
@@ -13,7 +13,7 @@ async function markAsRead(mailId) {
 
   const options = { upsert: false };
 
-  const objectId = mongo.ObjectId(mailId);
+  const objectId = ObjectId(mailId);
 
   const { modifiedCount } = await db
     .collection('users')
