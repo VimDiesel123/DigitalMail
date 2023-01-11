@@ -12,7 +12,16 @@ import PropTypes from 'prop-types';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-function MailItemRow({ id, unread, favorited, link, sender, dateRecieved, onLinkClicked }) {
+function MailItemRow({
+  id,
+  unread,
+  favorited,
+  link,
+  sender,
+  dateRecieved,
+  markMailAsRead,
+  setFavorite,
+}) {
   return (
     <tr>
       <td>
@@ -28,6 +37,8 @@ function MailItemRow({ id, unread, favorited, link, sender, dateRecieved, onLink
           <FontAwesomeIcon
             icon={faStarRegular}
             className={favorited ? 'text-warning' : 'text-body'}
+            onClick={() => setFavorite(id, !favorited)}
+            role="button"
           />
           <Badge
             bg="info"
@@ -38,7 +49,7 @@ function MailItemRow({ id, unread, favorited, link, sender, dateRecieved, onLink
           <a
             href={link}
             onClick={() => {
-              onLinkClicked(id);
+              markMailAsRead(id);
             }}
             className="text-body"
             target="_blank"
@@ -78,7 +89,8 @@ MailItemRow.propTypes = {
   link: PropTypes.string.isRequired,
   sender: PropTypes.string,
   dateRecieved: PropTypes.string,
-  onLinkClicked: PropTypes.func.isRequired,
+  markMailAsRead: PropTypes.func.isRequired,
+  setFavorite: PropTypes.func.isRequired,
 };
 
 MailItemRow.defaultProps = {
@@ -88,17 +100,19 @@ MailItemRow.defaultProps = {
   dateRecieved: 'Uknown',
 };
 
-export default function MailTable({ mail, markMailAsRead }) {
+export default function MailTable({ mail, markMailAsRead, setFavorite }) {
   const mailRows = mail
     ? mail.map((item) => (
         <MailItemRow
           key={item.id}
           id={item.id}
+          favorited={item.favorited}
           unread={item.unread}
           link={item.signedUrl}
           sender={item.sender}
           dateRecieved={new Date(item.date_recieved).toLocaleDateString()}
-          onLinkClicked={markMailAsRead}
+          markMailAsRead={markMailAsRead}
+          setFavorite={setFavorite}
         />
       ))
     : null;
@@ -142,6 +156,7 @@ MailTable.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   mail: PropTypes.array,
   markMailAsRead: PropTypes.func.isRequired,
+  setFavorite: PropTypes.func.isRequired,
 };
 
 MailTable.defaultProps = {

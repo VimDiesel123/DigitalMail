@@ -55,6 +55,28 @@ export default function MailList() {
     console.log(response);
   };
 
+  const setFavorite = async (mailId, value) => {
+    const accessToken = await getAccessTokenSilently();
+
+    const baseUrl = window.location.origin;
+    const url = new URL(`api/user/mail/${mailId}`, baseUrl);
+    url.searchParams.append('favorite', value);
+
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    // TODO: (David) This is really inefficient and could cause problems. I'm refetching all the mail when only one is updated.
+    const updatedMail = await fetchMail();
+    setMail(updatedMail);
+
+    console.log(response);
+  };
+
   useEffect(() => {
     async function updateMail() {
       const mail = await fetchMail();
@@ -66,7 +88,7 @@ export default function MailList() {
   return (
     <div className="d-flex flex-column">
       <GreetingCard />
-      <MailTable mail={mails} markMailAsRead={markMailAsRead} />
+      <MailTable mail={mails} markMailAsRead={markMailAsRead} setFavorite={setFavorite} />
       <div className="d-flex align-items-center border border-top-0 rounded-bottom">
         <Pagination className="ms-auto my-0 py-1">
           <Pagination.First />
