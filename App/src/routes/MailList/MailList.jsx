@@ -22,7 +22,7 @@ export default function MailList() {
   const fetchMail = async () => {
     const accessToken = await getAccessTokenSilently();
 
-    const response = await fetch(`/api/user/pdfs`, {
+    const response = await fetch(`/api/user/mail`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export default function MailList() {
   const markMailAsRead = async (mailId) => {
     const accessToken = await getAccessTokenSilently();
 
-    const response = await fetch(`api/user/pdfs/${mailId}`, {
+    const response = await fetch(`api/user/mail/${mailId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,6 @@ export default function MailList() {
           <Pagination.Last />
         </Pagination>
       </div>
-      {/* <PDFLinks /> */}
     </div>
   );
 }
