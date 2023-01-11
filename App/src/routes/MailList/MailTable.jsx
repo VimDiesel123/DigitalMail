@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-function MailItemRow({ id, unread, link, sender, dateRecieved, onLinkClicked }) {
+function MailItemRow({ id, unread, favorited, link, sender, dateRecieved, onLinkClicked }) {
   return (
     <tr>
       <td>
@@ -25,7 +25,10 @@ function MailItemRow({ id, unread, link, sender, dateRecieved, onLinkClicked }) 
               <Form.Check type="checkbox" />
             </Form.Group>
           </Form>
-          <FontAwesomeIcon icon={faStarRegular} className="text-body" />
+          <FontAwesomeIcon
+            icon={faStarRegular}
+            className={favorited ? 'text-warning' : 'text-body'}
+          />
           <Badge
             bg="info"
             className={`${unread ? 'visible' : 'invisible'} p-1 rounded-circle border border-light`}
@@ -70,6 +73,7 @@ function MailItemRow({ id, unread, link, sender, dateRecieved, onLinkClicked }) 
 
 MailItemRow.propTypes = {
   id: PropTypes.string.isRequired,
+  favorited: PropTypes.bool,
   unread: PropTypes.bool,
   link: PropTypes.string.isRequired,
   sender: PropTypes.string,
@@ -78,6 +82,7 @@ MailItemRow.propTypes = {
 };
 
 MailItemRow.defaultProps = {
+  favorited: false,
   unread: false,
   sender: 'Uknown',
   dateRecieved: 'Uknown',
@@ -135,7 +140,7 @@ export default function MailTable({ mail, markMailAsRead }) {
 
 MailTable.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  mail: PropTypes.object,
+  mail: PropTypes.array,
   markMailAsRead: PropTypes.func.isRequired,
 };
 

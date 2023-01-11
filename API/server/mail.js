@@ -25,7 +25,7 @@ async function update(mailId, updates) {
   return modifiedCount === 1;
 }
 
-const markAsRead = async (mailId) => update(mailId, { unread: true });
+const markAsRead = async (mailId) => update(mailId, { unread: false });
 
 const trash = async (mailId) => update(mailId, { trashed: true });
 

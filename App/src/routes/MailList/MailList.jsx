@@ -36,7 +36,11 @@ export default function MailList() {
   const markMailAsRead = async (mailId) => {
     const accessToken = await getAccessTokenSilently();
 
-    const response = await fetch(`api/user/mail/${mailId}`, {
+    const baseUrl = window.location.origin;
+    const url = new URL(`api/user/mail/${mailId}`, baseUrl);
+    url.searchParams.append('read', 'true');
+
+    const response = await fetch(url, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +61,7 @@ export default function MailList() {
       setMail(mail);
     }
     updateMail();
-  });
+  }, []);
 
   return (
     <div className="d-flex flex-column">
