@@ -8,92 +8,31 @@ async function byID(mailId) {
   return user.mail.find((mail) => mail.id === mailId);
 }
 
-// TODO: (David) YIKES! DRY this out!
-
-async function markAsRead(mailId) {
-  const db = getDb();
-
-  const options = { upsert: false };
-
-  const objectId = ObjectId(mailId);
-
-  const { modifiedCount } = await db
-    .collection('users')
-    .updateOne(
-      { mail: { $elemMatch: { id: objectId } } },
-      { $set: { 'mail.$.unread': false } },
-      options,
-    );
-
-  return modifiedCount === 1;
-}
-
-async function trash(mailId) {
+async function update(mailId, updates) {
   const db = getDb();
   const objectId = ObjectId(mailId);
 
   const options = { upsert: false };
 
+  const newUpdates = Object.fromEntries(
+    Object.entries(updates).map(([key, value]) => [`mail.$.${key}`, value]),
+  );
+
   const { modifiedCount } = await db
     .collection('users')
-    .updateOne(
-      { mail: { $elemMatch: { id: objectId } } },
-      { $set: { 'mail.$.trashed': true } },
-      options,
-    );
+    .updateOne({ mail: { $elemMatch: { id: objectId } } }, { $set: newUpdates }, options);
 
   return modifiedCount === 1;
 }
 
-async function recover(mailId) {
-  const db = getDb();
-  const objectId = ObjectId(mailId);
+const markAsRead = async (mailId) => update(mailId, { unread: true });
 
-  const options = { upsert: false };
+const trash = async (mailId) => update(mailId, { trashed: true });
 
-  const { modifiedCount } = await db
-    .collection('users')
-    .updateOne(
-      { mail: { $elemMatch: { id: objectId } } },
-      { $set: { 'mail.$.trashed': false } },
-      options,
-    );
+const recover = async (mailId) => update(mailId, { trashed: false });
 
-  return modifiedCount === 1;
-}
+const favorite = async (mailId) => update(mailId, { favorited: true });
 
-async function favorite(mailId) {
-  const db = getDb();
-  const objectId = ObjectId(mailId);
-
-  const options = { upsert: false };
-
-  const { modifiedCount } = await db
-    .collection('users')
-    .updateOne(
-      { mail: { $elemMatch: { id: objectId } } },
-      { $set: { 'mail.$.favorited': true } },
-      options,
-    );
-
-  return modifiedCount === 1;
-}
-
-async function unfavorite(mailId) {
-  const db = getDb();
-  const objectId = ObjectId(mailId);
-
-  const options = { upsert: false };
-
-  const { modifiedCount } = await db
-    .collection('users')
-    .updateOne(
-      { mail: { $elemMatch: { id: objectId } } },
-      { $set: { 'mail.$.favorited': false } },
-      options,
-    );
-
-  return modifiedCount === 1;
-}
+const unfavorite = async (mailId) => update(mailId, { favorited: false });
 
 module.exports = { byID, markAsRead, trash, recover, favorite, unfavorite };
