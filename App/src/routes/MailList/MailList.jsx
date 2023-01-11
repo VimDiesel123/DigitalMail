@@ -30,7 +30,9 @@ export default function MailList() {
       },
     });
     const { mail } = await response.json();
-    return mail;
+
+    // Sort the mail by unread first
+    return mail.sort((item1, item2) => (item1.unread && !item2.unread ? -1 : 1));
   };
 
   const markMailAsRead = async (mailId) => {
