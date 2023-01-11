@@ -1,12 +1,28 @@
 const Router = require('express');
+const { expressjwt: jwt } = require('express-jwt');
+const jwks = require('jwks-rsa');
 const mail = require('./mail');
 const user = require('./user');
 const signedUrls = require('./signed_url');
 
 const router = new Router();
 
+const jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://dev-6xzvx6amw4huzdgq.us.auth0.com/.well-known/jwks.json',
+  }),
+  audience: 'https://digitalmail.com/api',
+  issuer: 'https://dev-6xzvx6amw4huzdgq.us.auth0.com/',
+  algorithms: ['RS256'],
+});
+
+router.use(jwtCheck);
+
 // Return all mail items for user.
-router.get('/api/user/mail', async (req, res) => {
+router.get('/', async (req, res) => {
   // TODO: VERY IMPORTANT!!!!!!!!!! (David)
   // I need to add error handling with express to handle what happens if
   // the user isn't in the DB.
@@ -15,7 +31,7 @@ router.get('/api/user/mail', async (req, res) => {
   const authenticatedUser = await user.byID(authenticatedUserID);
 
   if (!authenticatedUser) {
-    return res.json({ pdfs: [] });
+    return res.json({ pdfs: {} });
   }
 
   const mailWithUrls = await signedUrls.withSignedUrl(authenticatedUser.mail);
@@ -29,7 +45,7 @@ router.get('/api/user/mail', async (req, res) => {
 // TODO: (David) also get rid of these console logs.
 
 // Mark mail item as read or favorited:
-router.patch('/api/user/mail/:id', async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
   const { id } = req.params;
   const { read, favorite } = req.query;
 
@@ -71,7 +87,7 @@ router.patch('/api/user/mail/:id', async (req, res, next) => {
 });
 
 // Send mail item to trash.
-router.delete('/api/user/mail/:id', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const trashed = await mail.trash(req.params.id);
 
@@ -87,7 +103,7 @@ router.delete('/api/user/mail/:id', async (req, res, next) => {
 });
 
 // Recover mail item from trash.
-router.put('/api/user/mail/:id', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const recovered = await mail.recover(req.params.id);
 
