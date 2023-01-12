@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination } from 'react-bootstrap';
+import { Pagination, Spinner } from 'react-bootstrap';
 import MailTable from './MailTable.jsx';
 import GreetingCard from './GreetingCard.jsx';
 import useMail from '../../useMail.js';
@@ -18,7 +18,14 @@ export default function MailList() {
 
   const { mail, loading, markMailAsRead, setFavorite } = useMail();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
 
   return (
     <div className="d-flex flex-column">
