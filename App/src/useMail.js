@@ -42,9 +42,13 @@ export default function useMail() {
       },
     });
 
-    // TODO: (David) This is really inefficient and could cause problems. I'm refetching all the mail when only one is updated.
-    const updatedMail = await fetchMail();
-    setMail(updatedMail);
+    const updatedMail = mails.find((mailItem) => mailItem.id === mailId);
+
+    console.log(updatedMail);
+
+    // // TODO: (David) This is really inefficient and could cause problems. I'm refetching all the mail when only one is updated.
+    // const updatedMail = await fetchMail();
+    // setMail(updatedMail);
 
     console.log(response);
   };
@@ -64,11 +68,15 @@ export default function useMail() {
       },
     });
 
-    // TODO: (David) This is really inefficient and could cause problems. I'm refetching all the mail when only one is updated.
-    const updatedMail = await fetchMail();
-    setMail(updatedMail);
+    const updatedMail = mails.find((mailItem) => mailItem.id === mailId);
 
-    console.log(response);
+    console.log(updatedMail);
+
+    // TODO: (David) This is really inefficient and could cause problems. I'm refetching all the mail when only one is updated.
+    // const updatedMail = await fetchMail();
+    // setMail(updatedMail);
+
+    // console.log(response);
   };
 
   const { searchTerm } = useContext(SearchContext);
