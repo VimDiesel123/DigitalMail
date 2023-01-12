@@ -17,7 +17,7 @@ export default function MailTable({ mail, markMailAsRead, setFavorite }) {
       ))
     : null;
   return (
-    <Table hover className="mt-3 mb-0" striped>
+    <Table hover striped className="mb-0">
       <thead className="text-bg-primary p-1">
         <tr>
           <th>

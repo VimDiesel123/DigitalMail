@@ -1,12 +1,22 @@
-import React from 'react';
-import Select from 'react-select';
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+import React, { useContext } from 'react';
+import { Form, InputGroup } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import SearchContext from '../../../SearchContext.jsx';
 
 export default function Search() {
-  return <Select options={options} placeholder="Search..." />;
+  const { setSearchTerm } = useContext(SearchContext);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  return (
+    <InputGroup>
+      <Form.Control type="search" placeholder="Search..." onChange={handleSearch} />
+      <InputGroup.Text>
+        <FontAwesomeIcon icon={faSearch} />
+      </InputGroup.Text>
+    </InputGroup>
+  );
 }

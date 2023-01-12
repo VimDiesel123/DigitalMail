@@ -7,7 +7,7 @@ export default function GreetingCard() {
   return (
     <Collapse timeout={250} appear in={visible}>
       <div>
-        <Card bg="dark" border="info" text="light" className="w-75 mt-2 mx-auto position-relative">
+        <Card bg="dark" border="info" text="light" className="w-75 my-3 mx-auto position-relative">
           <Card.Body>
             <Card.Title>
               Welcome Back <b>BRO!</b>

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Pagination } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import MailTable from './MailTable.jsx';
 import GreetingCard from './GreetingCard.jsx';
+import SearchContext from '../../SearchContext.jsx';
 
 export default function MailList() {
   const active = 1;
 
-  // Creates an array of num digits start at 1.
+  // Creates an array of num digits starting at 1.
   const range = (num) => [...Array(num).keys()].map((i) => i + 1);
 
   const paginationItems = range(5).map((number) => (
@@ -31,8 +32,7 @@ export default function MailList() {
     });
     const { mail } = await response.json();
 
-    // Sort the mail by unread first
-    return mail.sort((item1, item2) => (item1.unread && !item2.unread ? -1 : 1));
+    return mail;
   };
 
   const markMailAsRead = async (mailId) => {
@@ -79,13 +79,15 @@ export default function MailList() {
     console.log(response);
   };
 
+  const { searchTerm } = useContext(SearchContext);
+
   useEffect(() => {
     async function updateMail() {
       const mail = await fetchMail();
-      setMail(mail);
+      setMail(mail.filter((mailItem) => mailItem.sender.includes(searchTerm)));
     }
     updateMail();
-  }, []);
+  }, [searchTerm]);
 
   return (
     <div className="d-flex flex-column">

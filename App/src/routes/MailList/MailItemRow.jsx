@@ -52,7 +52,7 @@ export default function MailItemRow({
         </div>
       </td>
       <td>{sender}</td>
-      <td>{dateRecieved}</td>
+      <td>{new Date(dateRecieved).toLocaleDateString()}</td>
       <td>
         <Dropdown>
           <Dropdown.Toggle as={FontAwesomeIcon} icon={faEllipsisVertical} role="button" />

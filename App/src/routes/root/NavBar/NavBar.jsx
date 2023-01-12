@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  Navbar,
-  Container,
-  Form,
-  Nav,
-  NavItem,
-  NavLink,
-  FormControl,
-  Badge,
-  Dropdown,
-} from 'react-bootstrap';
+import { Navbar, Container, Nav, NavItem, NavLink, Badge, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCow, faInbox, faGear, faCircleInfo, faUser } from '@fortawesome/free-solid-svg-icons';
 import Search from './Search.jsx';
