@@ -8,9 +8,7 @@
   },
   "scripts": {
     "start": "nodemon -w server -e js, server/server.js",
-    "test": "jest",
-    "heroku-postbuild": "cd ../App && npm install && npm run build"
-    
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
