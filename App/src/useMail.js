@@ -68,13 +68,13 @@ export default function useMail() {
       },
     });
 
-    const updatedMail = mails.find((mailItem) => mailItem.id === mailId);
+    const updatedMailItem = mails.find((mailItem) => mailItem.id === mailId);
 
-    console.log(updatedMail);
+    console.log(updatedMailItem);
 
     // TODO: (David) This is really inefficient and could cause problems. I'm refetching all the mail when only one is updated.
-    // const updatedMail = await fetchMail();
-    // setMail(updatedMail);
+    const updatedMail = await fetchMail();
+    setMail(updatedMail);
 
     // console.log(response);
   };
