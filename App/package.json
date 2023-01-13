@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -w appserver.js appserver.js",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "build": "npx webpack"
   },
   "author": "David Smith",
   "license": "ISC",
