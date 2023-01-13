@@ -1,0 +1,20 @@
+{
+  "name": "digitalmail",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd api && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VimDiesel123/DigitalMail.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VimDiesel123/DigitalMail/issues"
+  },
+  "homepage": "https://github.com/VimDiesel123/DigitalMail#readme"
+}

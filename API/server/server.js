@@ -16,7 +16,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../App/dist', 'index.html'));
 });
 
+const port = process.env.PORT;
+
 (async function start() {
   await connectToDb();
-  app.listen(3000, () => console.log('App started on port 3000'));
+  app.listen(port, () => console.log('App started on port 3000'));
 })();
