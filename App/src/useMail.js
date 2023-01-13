@@ -21,7 +21,7 @@ export default function useMail() {
     });
     const { mail } = await response.json();
     // This is to simulate long load times from the api.
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 200));
 
     setLoading(false);
     return mail;
