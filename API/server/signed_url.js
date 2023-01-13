@@ -2,8 +2,11 @@ require('dotenv').config();
 const { Storage } = require('@google-cloud/storage');
 
 async function withSignedUrl(mail) {
-  const keyFileName = process.env.GOOGLE_CLOUD_STORAGE_KEY_FILE;
-  const storage = new Storage({ keyFileName });
+  // const keyFileName = process.env.GOOGLE_CLOUD_STORAGE_KEY_FILE;
+
+  // console.log(keyFileName);
+
+  const storage = new Storage(/* { keyFileName } */);
 
   const mailWithSignedUrls = await Promise.all(
     mail.map(async (mailItem) => {
