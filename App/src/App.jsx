@@ -45,7 +45,7 @@ function App() {
     <Auth0Provider
       domain="dev-6xzvx6amw4huzdgq.us.auth0.com"
       clientId="rcemq97nBaT1z5qWiuzy2JzeuE2qXoNI"
-      redirectUri="https://digitalmail.herokuapp.com/"
+      redirectUri="https://digitalmail.herokuapp.com/inbox"
       audience="https://digitalmail.com/api"
     >
       <SearchContext.Provider value={search}>
