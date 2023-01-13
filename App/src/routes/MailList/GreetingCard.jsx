@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Card, CloseButton, Collapse } from 'react-bootstrap';
+import UnreadContext from '../../UnreadContext.jsx';
 
 export default function GreetingCard() {
   const [visible, setVisible] = useState(true);
+
+  const { unreadCount } = useContext(UnreadContext);
 
   return (
     <Collapse timeout={250} appear in={visible}>
@@ -13,7 +16,7 @@ export default function GreetingCard() {
               Welcome Back <b>BRO!</b>
             </Card.Title>
             <Card.Text className="text-info">
-              You have <b>2</b> unread mails.
+              You have <b>{unreadCount}</b> unread mails.
             </Card.Text>
           </Card.Body>
           <CloseButton

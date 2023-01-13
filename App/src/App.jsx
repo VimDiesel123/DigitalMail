@@ -17,6 +17,9 @@ import Help from './routes/Help.jsx';
 import './scss/styles.scss';
 import Trash from './routes/Trash.jsx';
 import SearchContext from './SearchContext.jsx';
+import unreadContext from './UnreadContext.jsx';
+import UnreadContext from './UnreadContext.jsx';
+import useUnread from './useUnread.js';
 
 library.add(fas);
 
@@ -41,6 +44,7 @@ const useSearch = () => {
 
 function App() {
   const search = useSearch();
+  const unread = useUnread();
   return (
     <Auth0Provider
       domain="dev-6xzvx6amw4huzdgq.us.auth0.com"
@@ -49,7 +53,9 @@ function App() {
       audience="https://digitalmail.com/api"
     >
       <SearchContext.Provider value={search}>
-        <RouterProvider router={router} />
+        <UnreadContext.Provider value={unread}>
+          <RouterProvider router={router} />
+        </UnreadContext.Provider>
       </SearchContext.Provider>
     </Auth0Provider>
   );

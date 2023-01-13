@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Badge, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInbox, faTrash, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import FilterMenu from './FilterMenu.jsx';
 import ProfileMenu from './ProfileMenu.jsx';
+import UnreadContext from '../../../UnreadContext.jsx';
 
 export default function Sidebar() {
+  const { unreadCount } = useContext(UnreadContext);
+
   return (
     <div className="col-2 d-flex flex-column">
       <ListGroup className="flex-fill">
@@ -20,8 +23,12 @@ export default function Sidebar() {
             </span>
             <span>
               Inbox{' '}
-              <Badge pill bg="primary" className="ms-2">
-                2
+              <Badge
+                pill
+                bg="primary"
+                className={`${unreadCount > 0 ? 'visible' : 'invisible'} ms-2`}
+              >
+                {unreadCount}
               </Badge>
             </span>
           </div>

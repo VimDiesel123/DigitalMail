@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Pagination, Spinner } from 'react-bootstrap';
 import MailTable from './MailTable.jsx';
 import GreetingCard from './GreetingCard.jsx';
 import useMail from '../../useMail.js';
+import UnreadContext from '../../UnreadContext.jsx';
 
 export default function MailList() {
   const active = 1;
@@ -26,6 +27,9 @@ export default function MailList() {
         </Spinner>
       </div>
     );
+
+  const { setUnreadCount } = useContext(UnreadContext);
+  setUnreadCount(mail.filter((mailItem) => mailItem.unread).length);
 
   return (
     <div className="d-flex flex-column">

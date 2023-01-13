@@ -1,10 +1,12 @@
 import React from 'react';
-import { Navbar, Container, Nav, NavItem, NavLink, Badge, Dropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavItem, NavLink, Badge, Dropdown, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCow, faInbox, faGear, faCircleInfo, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useAuth0 } from '@auth0/auth0-react';
 import Search from './Search.jsx';
 
 export default function NavBar() {
+  const { logout } = useAuth0();
   return (
     <Navbar expand="lg" bg="dark" variant="dark">
       <Container fluid>
@@ -49,7 +51,14 @@ export default function NavBar() {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Header>User</Dropdown.Header>
-                    <Dropdown.Item>Profile or something</Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        console.log('Logging out.');
+                        logout({ returnTo: `${window.location.origin}` });
+                      }}
+                    >
+                      Log Out
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
