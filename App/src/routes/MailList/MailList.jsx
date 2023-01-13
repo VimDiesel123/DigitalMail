@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Pagination, Spinner } from 'react-bootstrap';
 import MailTable from './MailTable.jsx';
 import GreetingCard from './GreetingCard.jsx';
@@ -19,6 +19,15 @@ export default function MailList() {
 
   const { mail, loading, markMailAsRead, setFavorite } = useMail();
 
+  const { setUnreadCount } = useContext(UnreadContext);
+
+  useEffect(() => {
+    /* TODO: (David) This fixes a bug with useState hooks being called in different orders on different renders.
+    but I don't underestnad why yet:
+    https://stackoverflow.com/questions/62336340/cannot-update-a-component-while-rendering-a-different-component-warning */
+    setUnreadCount(mail ? mail.filter((mailItem) => mailItem.unread).length : 0);
+  }, [mail]);
+
   if (loading)
     return (
       <div className="d-flex justify-content-center align-items-center h-100">
@@ -27,9 +36,6 @@ export default function MailList() {
         </Spinner>
       </div>
     );
-
-  const { setUnreadCount } = useContext(UnreadContext);
-  setUnreadCount(mail.filter((mailItem) => mailItem.unread).length);
 
   return (
     <div className="d-flex flex-column">

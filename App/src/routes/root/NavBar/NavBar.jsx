@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Container, Nav, NavItem, NavLink, Badge, Dropdown, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavItem, NavLink, Badge, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCow, faInbox, faGear, faCircleInfo, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useAuth0 } from '@auth0/auth0-react';
