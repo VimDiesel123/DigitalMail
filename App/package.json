@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon -w appserver.js appserver.js",
     "watch": "webpack --watch",
-    "build": "npx webpack"
+    "build": "webpack"
   },
   "author": "David Smith",
   "license": "ISC",
@@ -26,7 +26,8 @@
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",
-    "react-select": "^5.7.0"
+    "react-select": "^5.7.0",
+    "webpack-cli": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
@@ -49,9 +50,6 @@
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.11.1"
+    "url-loader": "^4.1.1"
   }
 }
