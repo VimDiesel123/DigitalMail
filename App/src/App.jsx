@@ -39,15 +39,13 @@ const useSearch = () => {
   return { searchTerm, setSearchTerm };
 };
 
-const redirectUri = `${window.location}/inbox`;
-
 function App() {
   const search = useSearch();
   return (
     <Auth0Provider
       domain="dev-6xzvx6amw4huzdgq.us.auth0.com"
       clientId="rcemq97nBaT1z5qWiuzy2JzeuE2qXoNI"
-      redirectUri={redirectUri}
+      redirectUri={`${window.location.origin}/inbox`}
       audience="https://digitalmail.com/api"
     >
       <SearchContext.Provider value={search}>
