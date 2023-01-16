@@ -17,7 +17,6 @@ import Help from './routes/Help.jsx';
 import './scss/styles.scss';
 import Trash from './routes/Trash.jsx';
 import SearchContext from './SearchContext.jsx';
-import unreadContext from './UnreadContext.jsx';
 import UnreadContext from './UnreadContext.jsx';
 import useUnread from './useUnread.js';
 

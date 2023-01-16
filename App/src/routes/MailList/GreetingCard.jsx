@@ -9,13 +9,15 @@ export default function GreetingCard() {
   const { unreadCount } = useContext(UnreadContext);
   const { user } = useAuth0();
 
+  console.log(user);
+
   return (
     <Collapse timeout={250} appear in={visible}>
       <div>
         <Card bg="dark" border="info" text="light" className="w-75 my-3 mx-auto position-relative">
           <Card.Body>
             <Card.Title>
-              Welcome Back <b>{user.name}!</b>
+              Welcome Back <b>{user.nickname.toUpperCase()}!</b>
             </Card.Title>
             <Card.Text className="text-info">
               You have <b>{unreadCount}</b> unread mails.

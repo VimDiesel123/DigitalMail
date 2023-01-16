@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <Container fluid>
       <Row className="g-0">
-        <footer className="d-flex justify-content-between align-items-center py-3 border-top">
+        <footer className="d-flex justify-content-between align-items-center py-3 border-top fixed-bottom">
           <Col md={4} className="mx-5 px-5 text-muted">
             <a href="#" className="me-2 text-muted text-decoration-none lh-1">
               <FontAwesomeIcon icon={faCow} size="lg" />
